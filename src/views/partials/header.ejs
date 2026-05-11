@@ -8,14 +8,34 @@
         <%= title %>
     </title>
     <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/large.css" media="screen and (min-width: 768px)">
 </head>
 
 <body>
     <nav>
         <ul>
-            <li><a href="/">Home</a></li>
-            <li><a href="/organizations">Organizations</a></li>
-            <li><a href="/projects">Projects</a></li>
-            <li><a href="/categories">Categories</a></li>
+            <li>
+                <a class="<%= title === 'Home' ? 'active' : '' %>" href="/">
+                    Home
+                </a>
+            </li>
+
+            <li>
+                <a class="<%= title === 'Our Partner Organizations' ? 'active' : '' %>" href="/organizations">
+                    Organizations
+                </a>
+            </li>
+
+            <li>
+                <a class="<%= title === 'Service Projects' ? 'active' : '' %>" href="/projects">
+                    Projects
+                </a>
+            </li>
+
+            <li>
+                <a class="<%= title === 'Service Categories' ? 'active' : '' %>" href="/categories">
+                    Categories
+                </a>
+            </li>
         </ul>
     </nav>
