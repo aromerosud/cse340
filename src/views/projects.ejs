@@ -1,6 +1,7 @@
 <%- include('partials/header') %>
 
     <main>
+
         <h1>
             <%= title %>
         </h1>
@@ -8,21 +9,27 @@
         <h2>Upcoming Service Projects</h2>
 
         <ul>
-            <li>
-                Park Cleanup - Join us to clean up local parks
-                and make them beautiful!
-            </li>
 
-            <li>
-                Food Drive - Help collect and distribute food
-                to those in need.
-            </li>
+            <% projects.forEach(project=> { %>
 
-            <li>
-                Community Tutoring - Volunteer to tutor students
-                in various subjects.
-            </li>
+                <li>
+
+                    <strong>
+                        <%= new Date(project.date).toLocaleDateString() %>
+                    </strong>
+
+                    :
+
+                    <%= project.title %>
+
+                        (<%= project.organization_name %>)
+
+                </li>
+
+                <% }) %>
+
         </ul>
+
     </main>
 
     <%- include('partials/footer') %>
