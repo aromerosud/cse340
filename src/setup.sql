@@ -51,3 +51,50 @@ VALUES
 (3, 'Health Workshop', 'Community health education.', 'Lima', '2026-06-03'),
 (3, 'Clothing Donation', 'Distribute donated clothes.', 'Cusco', '2026-06-08'),
 (3, 'Senior Assistance', 'Support elderly citizens.', 'Arequipa', '2026-06-15');
+
+CREATE TABLE categories (
+    category_id SERIAL PRIMARY KEY,
+    name VARCHAR(100) NOT NULL UNIQUE
+);
+
+INSERT INTO categories (name)
+VALUES
+('Education'),
+('Environment'),
+('Healthcare');
+
+CREATE TABLE project_categories (
+    project_id INT NOT NULL,
+    category_id INT NOT NULL,
+
+    PRIMARY KEY (project_id, category_id),
+
+    CONSTRAINT fk_project_categories_project
+        FOREIGN KEY (project_id)
+        REFERENCES projects(project_id)
+        ON DELETE CASCADE,
+
+    CONSTRAINT fk_project_categories_category
+        FOREIGN KEY (category_id)
+        REFERENCES categories(category_id)
+        ON DELETE CASCADE
+);
+
+INSERT INTO project_categories (project_id, category_id)
+VALUES
+(1,1),
+(1,2),
+(2,2),
+(3,1),
+(4,3),
+(5,1),
+(6,2),
+(7,2),
+(8,1),
+(9,3),
+(10,2),
+(11,1),
+(12,3),
+(13,3),
+(14,1),
+(15,2);
