@@ -23,3 +23,17 @@ h2 {
 .main-logo {
     max-width: 400px;
 }
+
+/* ===== Form New Organization ===== */
+
+@media screen and (min-width: 768px) {
+
+    .organization-form {
+        max-width: 700px;
+        margin: 0 auto;
+    }
+
+    .organization-form button {
+        width: fit-content;
+    }
+}
