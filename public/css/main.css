@@ -125,7 +125,9 @@ footer {
     gap: 0.5rem;
 }
 
-.form-container input,
+.form-container input[type="text"],
+.form-container input[type="date"],
+.form-container input[type="email"],
 .form-container textarea,
 .form-container select {
     width: 100%;
@@ -147,6 +149,18 @@ footer {
     border: none;
     border-radius: 8px;
     cursor: pointer;
+}
+
+.checkbox-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.checkbox-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
 }
 
 /* Flash message styles */
