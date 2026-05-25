@@ -42,7 +42,17 @@
 
         </p>
 
-        <a href="/assign-categories/<%= project.project_id %>">Edit Categories</a>
+        <div class="link-actions">
+
+            <a href="/edit-project/<%= project.project_id %>">
+                Edit Project
+            </a>
+
+            <a href="/assign-categories/<%= project.project_id %>">
+                Edit Categories
+            </a>
+
+        </div>
 
     </main>
 
