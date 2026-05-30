@@ -23,7 +23,15 @@ import {
     processEditCategoryForm
 } from './controllers/categories.js';
 import { testErrorPage } from './controllers/errors.js';
-import { showUserRegistrationForm, processUserRegistrationForm, showLoginForm, processLoginForm, processLogout} from './controllers/users.js'
+import { 
+    showUserRegistrationForm, 
+    processUserRegistrationForm, 
+    showLoginForm, 
+    processLoginForm, 
+    processLogout,
+    requireLogin,
+    showDashboard
+} from './controllers/users.js'
 
 const router = express.Router();
 
@@ -81,6 +89,9 @@ router.post('/edit-category/:id', categoryValidation, processEditCategoryForm);
 // User registration routes
 router.get('/register', showUserRegistrationForm);
 router.post('/register', processUserRegistrationForm);
+
+// Protected dashboard route
+router.get('/dashboard', requireLogin, showDashboard);
 
 
 
