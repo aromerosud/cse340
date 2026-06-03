@@ -1,0 +1,33 @@
+<%- include('partials/header') %>
+
+    <main>
+
+        <h1>
+            <%= title %>
+        </h1>
+
+        <h2>Registered users in the system:</h2>
+
+        <ul>
+
+            <% users.forEach(user=> { %>
+
+                <li>
+                    <strong>
+                        <%= user.name %>
+                    </strong>
+
+                    <p>Email: <%= user.email %>
+                    </p>
+
+                    <p>Role: <%= user.role_name %>
+                    </p>
+                </li>
+
+                <% }) %>
+
+        </ul>
+
+    </main>
+
+    <%- include('partials/footer') %>

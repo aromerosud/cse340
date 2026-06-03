@@ -11,6 +11,12 @@
         <p>Username: <%= email %>
         </p>
 
+
+        <div class="link-actions">
+            <% if (user && user.role_name==='admin' ) { %>
+                <p><a href="/users">Manage Users</a></p>
+                <% } %>
+        </div>
     </main>
 
     <%- include('partials/footer') %>

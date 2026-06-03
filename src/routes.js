@@ -31,7 +31,8 @@ import {
     processLogout,
     requireLogin,
     showDashboard,
-    requireRole
+    requireRole,
+    showUsers
 } from './controllers/users.js'
 
 const router = express.Router();
@@ -93,6 +94,8 @@ router.post('/register', processUserRegistrationForm);
 
 // Protected dashboard route
 router.get('/dashboard', requireLogin, showDashboard);
+
+router.get('/users', requireLogin, requireRole('admin'), showUsers);
 
 
 
