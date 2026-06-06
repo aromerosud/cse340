@@ -11,12 +11,55 @@
         <p>Username: <%= email %>
         </p>
 
+        <h3>My Volunteer Projects</h3>
 
-        <div class="link-actions">
-            <% if (user && user.role_name==='admin' ) { %>
-                <p><a href="/users">Manage Users</a></p>
+        <% if (volunteerProjects.length> 0) { %>
+
+            <ul>
+
+                <% volunteerProjects.forEach(project=> { %>
+
+                    <li>
+
+                        <a href="/project/<%= project.project_id %>">
+                            <%= project.title %>
+                        </a>
+
+                        (<%= project.location %>)
+
+                            -
+
+                            <%= new Date(project.date).toLocaleDateString() %>
+
+                                <div class="link-actions">
+                                    <form action="/project/<%= project.project_id %>/remove-volunteer" method="POST">
+
+                                        <button type="submit">
+                                            Remove Volunteer Status
+                                        </button>
+
+                                    </form>
+                                </div>
+                    </li>
+
+                    <% }) %>
+
+            </ul>
+
+            <% } else { %>
+
+                <p>
+                    You have not signed up to volunteer for any projects yet.
+                </p>
+
                 <% } %>
-        </div>
+
+
+                    <div class="link-actions">
+                        <% if (user && user.role_name==='admin' ) { %>
+                            <p><a href="/users">Manage Users</a></p>
+                            <% } %>
+                    </div>
     </main>
 
     <%- include('partials/footer') %>

@@ -166,4 +166,103 @@ const updateProject = async (projectId, title, description, location, date, orga
     return result.rows[0].project_id;
 };
 
-export { getAllProjects, getProjectsByOrganizationId, getUpcomingProjects, getProjectDetails, getCategoriesByProjectId, createProject, updateProject }
+const assignVolunteerToProject = async (userId, projectId) => {
+    const query = `
+        INSERT INTO public.project_volunteers (user_id, project_id)
+        VALUES ($1, $2)
+        RETURNING user_id, project_id;
+    `;
+
+    const queryParams = [userId, projectId];
+
+    const result = await db.query(query, queryParams);
+
+    if (result.rows.length === 0) {
+        throw new Error('Failed to assign volunteer to project');
+    }
+
+    if (process.env.ENABLE_SQL_LOGGING === 'true') {
+        console.log(`Assigned user ${userId} to project ${projectId}`);
+    }
+
+    return result.rows[0];
+};
+
+const removeVolunteerFromProject = async (userId, projectId) => {
+    const query = `
+        DELETE FROM public.project_volunteers
+        WHERE user_id = $1
+        AND project_id = $2
+        RETURNING user_id, project_id;
+    `;
+
+    const queryParams = [userId, projectId];
+
+    const result = await db.query(query, queryParams);
+
+    if (result.rows.length === 0) {
+        throw new Error('Volunteer assignment not found');
+    }
+
+    if (process.env.ENABLE_SQL_LOGGING === 'true') {
+        console.log(`Removed user ${userId} from project ${projectId}`);
+    }
+
+    return result.rows[0];
+};
+
+const getVolunteerProjectsByUserId = async (userId) => {
+    const query = `
+        SELECT
+            p.project_id,
+            p.organization_id,
+            p.title,
+            p.description,
+            p.location,
+            p.date,
+            o.name AS organization_name
+
+        FROM public.projects p
+
+        JOIN public.project_volunteers pv
+            ON p.project_id = pv.project_id
+
+        JOIN public.organization o
+            ON p.organization_id = o.organization_id
+
+        WHERE pv.user_id = $1
+
+        ORDER BY p.date;
+    `;
+
+    const result = await db.query(query, [userId]);
+
+    return result.rows;
+};
+
+const isUserVolunteerForProject = async (userId, projectId) => {
+    const query = `
+        SELECT 1
+        FROM public.project_volunteers
+        WHERE user_id = $1
+        AND project_id = $2;
+    `;
+
+    const result = await db.query(query, [userId, projectId]);
+
+    return result.rows.length > 0;
+};
+
+export { 
+    getAllProjects, 
+    getProjectsByOrganizationId, 
+    getUpcomingProjects, 
+    getProjectDetails, 
+    getCategoriesByProjectId, 
+    createProject, 
+    updateProject,
+    assignVolunteerToProject,
+    removeVolunteerFromProject,
+    getVolunteerProjectsByUserId,
+    isUserVolunteerForProject
+}
